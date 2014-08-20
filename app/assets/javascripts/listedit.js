@@ -30,7 +30,7 @@ $(function($){
   $(document).on('click', '.list .controls .add-item', function(e){
     e.preventDefault();
     var $itemList = $(this).closest('.list').find('.items');
-    $itemList.append('<li class="item"><textarea name="item-text[]"></textarea><a class="remove" href="#"><i class="fa fa-trash-o"></i></a></li>');
+    $itemList.append('<li class="item"><textarea name="item-text[]"></textarea><a class="remove edit-ui" href="#"><i class="fa fa-trash-o"></i></a></li>');
     $itemList.children().last().find('textarea').expanding();
   });
   //Deleting items
