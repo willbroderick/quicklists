@@ -1,0 +1,86 @@
+body {
+  background: #eee;
+}
+
+.list {
+  float: left;
+  width: 400px;
+  border: 1px solid #bbb;
+  background: white;
+  border-radius: 3px;
+  margin: 5px;
+  padding: 5px;
+  transition: all 500ms;
+  
+  a {
+    color: #96e;
+    text-decoration: none;
+  }
+
+  textarea {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1em;
+    color: inherit;
+    padding: 0.2em;
+    height: 1.2em;
+    resize: none;
+    &:hover {
+      background: #eee;
+    }
+  }
+
+  .title {
+    font-size: 140%;
+  }
+
+  .items {
+    margin: 0;
+    padding: 0;
+    .item {
+      list-style: none;
+      border-left: 1px solid #33a;
+      margin: 3px 0;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      .text {
+        margin-right: 20px;
+      }
+      .remove {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+      }
+    }
+  }
+  
+  .controls {
+    margin: 5px 0 0;
+    .remove-list {
+      float: right;
+    }
+  }
+
+  /* transitions */
+  .edit-ui {
+    opacity: 0;
+    transition: all 250ms;
+  }
+  .remove {
+    margin-right: -6px;
+  }
+  &:hover .edit-ui {
+    opacity: 1;
+    margin-right: 0;
+  }
+
+  &.dirty {
+    box-shadow: 0 0 8px 1px #f90;
+  }
+  &.failed-save {
+    box-shadow: 0 0 10px 5px #f00;
+  }
+}

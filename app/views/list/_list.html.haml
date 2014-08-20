@@ -1,0 +1,17 @@
+.list{ :'data-post-url' => (@show_edit_ui ? update_list_path(current_user.handle, list.id) : nil) }
+  .title 
+    = text_area_tag :name, list.name
+  %ul.items
+    - list.items.each_with_index do |item, index|
+      %li.item
+        .text
+          = text_area_tag "item-text[]", item.text
+        - if @show_edit_ui
+          %a.remove.edit-ui{ :href => '#'}= icon('trash-o')
+  - if @show_edit_ui
+    .controls.edit-ui
+      %a.add-item{ :href => '#'} 
+        = icon('plus-square-o') + ' New item'
+      %a.remove-list{ :href => '#' }
+        = icon('trash-o') + ' Delete list'
+      / %a.config{ :href => '#' } Config

@@ -1,0 +1,5 @@
+- if @show_edit_ui
+  = form_tag(new_list_path(current_user.handle), method: 'post') do
+    = submit_tag('Create new list')
+
+= render partial: 'list', collection: @lists
