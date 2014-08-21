@@ -1,4 +1,14 @@
 $(function($){
+  //Masonry
+  var $container = $('.lists');
+  $container.masonry({
+    itemSelector: '.list'
+  });
+  function reloadMasonry() {
+    $container.masonry('layout');
+  }
+  $(window).on('load', reloadMasonry);
+
   //Autosave
   var autosaveDelay = 4000;
   $(document).on('dirty', '.list[data-post-url]', function(){
@@ -25,6 +35,7 @@ $(function($){
   //After any input state change, dirty list to make save
   $(document).on('change keyup paste', '.list[data-post-url] :input', function(){
     $(this).closest('.list').trigger('dirty');
+    reloadMasonry();
   });
 
   //Adding new list items
@@ -33,6 +44,7 @@ $(function($){
     var $itemList = $(this).closest('.list').find('.items');
     $itemList.append('<li class="item"><textarea name="item-text[]"></textarea><div class="controls"><a class="remove ui fa fa-trash-o" href="#"></a></div></li>');
     $itemList.children().last().find('textarea').expanding();
+    reloadMasonry();
   });
   //Deleting items
   $(document).on('click', '.list .item .remove', function(e){
@@ -40,6 +52,7 @@ $(function($){
     var $list = $(this).closest('.list');
     $(this).closest('.item').remove();
     $list.trigger('dirty');
+    reloadMasonry();
   });
   //Deleting the list
   $(document).on('click', '.list .remove-list', function(e){
@@ -49,6 +62,7 @@ $(function($){
       $.post($list.data('post-url'), { delete: true }, function(data){
         if(data == 'Deleted') {
           $list.remove();
+          reloadMasonry();
         } else {
           $list.removeClass('dirty');
         }
@@ -78,4 +92,5 @@ $(function($){
 
   //All textareas are expandable
   $('.list textarea').expanding();
+
 });
