@@ -6,10 +6,11 @@
       %li.item
         .text
           = text_area_tag "item-text[]", item.text
-        - if @show_edit_ui
-          %a.remove.edit-ui{ :href => '#'}= icon('trash-o')
+        .controls.ui
+          - if @show_edit_ui
+            %a.remove{ :href => '#'}= icon('trash-o')
   - if @show_edit_ui
-    .controls.edit-ui
+    .controls.ui
       %a.add-item{ :href => '#'} 
         = icon('plus-square-o') + ' New item'
       %a.remove-list{ :href => '#' }

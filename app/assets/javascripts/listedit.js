@@ -22,6 +22,7 @@ $(function($){
       }, autosaveDelay));
     }
   });
+  //After any input state change, dirty list to make save
   $(document).on('change keyup paste', '.list[data-post-url] :input', function(){
     $(this).closest('.list').trigger('dirty');
   });
@@ -30,7 +31,7 @@ $(function($){
   $(document).on('click', '.list .controls .add-item', function(e){
     e.preventDefault();
     var $itemList = $(this).closest('.list').find('.items');
-    $itemList.append('<li class="item"><textarea name="item-text[]"></textarea><a class="remove edit-ui" href="#"><i class="fa fa-trash-o"></i></a></li>');
+    $itemList.append('<li class="item"><textarea name="item-text[]"></textarea><div class="controls"><a class="remove ui fa fa-trash-o" href="#"></a></div></li>');
     $itemList.children().last().find('textarea').expanding();
   });
   //Deleting items
@@ -59,6 +60,22 @@ $(function($){
   });
   //Rearranging items
   //Showing config
+  //Any links in this item?
+  $(document).on('urlcheck', '.list .items .item', function(){
+    $(this).find('.controls .ext-link').remove();
+    var val = $(this).find('textarea').val();
+    var found = val.match(/(https?:\/\/[^\ $]*)/gi);
+    if(found != null) {
+      for(var i=0; i<found.length; i++) {
+        $('<a class="ext-link fa fa-external-link"></a>').attr({ target: '_blank', href: found[i], title: found[i] }).appendTo($(this).find('.controls'));
+      }
+    }
+  });
+  $(document).on('change keyup paste', '.list .items .item :input', function(){
+    $(this).closest('.item').trigger('urlcheck');
+  });
+  $('.list .items .item').trigger('urlcheck');
+
   //All textareas are expandable
   $('.list textarea').expanding();
 });
