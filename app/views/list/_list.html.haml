@@ -6,9 +6,9 @@
       %li.item
         .text
           = text_area_tag "item-text[]", item.text
-        .controls.ui
+        .controls
           - if @show_edit_ui
-            %a.remove{ :href => '#'}= icon('trash-o')
+            %a.remove.ui{ :href => '#'}= icon('trash-o')
   - if @show_edit_ui
     .controls.ui
       %a.add-item{ :href => '#'} 

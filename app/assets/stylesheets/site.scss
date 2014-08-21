@@ -73,11 +73,12 @@ body {
     transition: all 250ms;
   }
   .item .ui {
-    margin-right: -1em;
+    position: relative;
+    left: 5px;
   }
   &:hover .ui {
     opacity: 1;
-    margin-right: 0;
+    left: 0;
   }
 
   &.dirty {
