@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require listedit.js
 //= require masonry.pkgd.min.js
+//= require jquery.textarea-expander.js
 //= require_tree .

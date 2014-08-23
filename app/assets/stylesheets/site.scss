@@ -1,6 +1,9 @@
 body {
-  font: 12px/1.3em 'Open Sans', sans-serif;
-  background: #eee;
+  margin: 0;
+  padding: 0;
+  font: 12px/1.2em 'Open Sans', sans-serif;
+  background: #fff;
+  color: #666;
 }
 
 .account {
@@ -13,12 +16,11 @@ body {
 .list {
   float: left;
   width: 350px;
-  border: 1px solid #bbb;
-  background: white;
+  border: 1px solid #fff;
+  background: transparent;
   border-radius: 3px;
   margin: 5px;
-  padding: 5px;
-  transition: box-shadow 500ms;
+  transition: box-shadow 500ms, border 500ms, background 500ms;
   
   a {
     color: #96e;
@@ -26,14 +28,16 @@ body {
   }
 
   textarea {
+    display: block;
     border: none;
     background: transparent;
     font-family: inherit;
     font-size: inherit;
-    line-height: 1em;
+    line-height: inherit;
     color: inherit;
-    padding: 0.2em;
+    padding: 4px 0;
     height: 1.2em;
+    width: 100%;
     resize: none;
     &:hover {
       background: #eee;
@@ -41,18 +45,20 @@ body {
   }
 
   .title {
-    font-size: 140%;
+    margin: 5px;
+    font-size: 130%;
+    line-height: 1.1em;
+    color: #333;
   }
 
   /* general item style */
   .items {
-    margin: 0;
+    margin: 0 0 5px;
     padding: 0;
     .item {
       list-style: none;
-      border-left: 1px solid #aae;
-      margin: 3px 0;
-      padding: 0 0 0 1px;
+      margin: 0 5px;
+      padding: 0;
       position: relative;
       overflow: hidden;
       .text {
@@ -79,11 +85,19 @@ body {
           }
         }
       }
+      &:after {
+        content: ' ';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        border-top: 1px solid #e5e5e5;
+      }
     }
   }
   
   > .controls {
-    margin: 5px 0 0;
+    margin: 5px;
     .config {
       float: right;
       position: relative;
@@ -133,6 +147,10 @@ body {
       /* controls can vanish */
       .controls { display: none; }
     }
+  }
+
+  &:hover {
+    border: 1px solid #ddd;
   }
 
   &.dirty {

@@ -42,7 +42,7 @@ $(function($){
     e.preventDefault();
     var $itemList = $(this).closest('.list').find('.items');
     $itemList.append('<li class="item"><textarea name="item-text[]"></textarea><div class="controls"><a class="remove ui fa fa-trash-o" href="#"></a></div></li>');
-    $itemList.children().last().find('textarea').expanding();
+    $itemList.children().last().find('textarea').TextAreaExpander();
     reloadMasonry();
   });
   //Deleting items
@@ -100,8 +100,12 @@ $(function($){
   });
 
   $(document).on('processparse', '.list', function(){
+    var checked = $(this).find('[name=is_in_parsed_mode]').is(':checked');
+    //Do nothing if no state change
+    if(checked == $(this).hasClass('mode-parsed')) return;
+
     $(this).find('.item .parsed').remove();
-    if($(this).find('[name=is_in_parsed_mode]').is(':checked')) {
+    if(checked) {
       $(this).addClass('mode-parsed');
       $(this).find('.item').each(function(){
         var $parsed = $('<div class="parsed"/>').appendTo(this);
@@ -112,6 +116,7 @@ $(function($){
       });
     } else {
       $(this).removeClass('mode-parsed');
+      $(this).find('textarea').trigger('forceresizetextarea');
     }
     reloadMasonry(); 
   });
@@ -125,7 +130,7 @@ $(function($){
     $(this).find('.item').trigger('urlcheck');
 
     //All textareas are expandable
-    $(this).find('textarea').expanding();
+    $(this).find('textarea').TextAreaExpander();
   }).trigger('firstinit');
 
   //Do last
