@@ -9,4 +9,8 @@ class UserController < ApplicationController
       abort 'incorrect params!'
     end
   end
+
+  def list
+    @users = User.all
+  end
 end

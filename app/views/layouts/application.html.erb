@@ -18,10 +18,12 @@
       <%= f.submit 'Update' %>
     <% end %>
     <%= link_to 'Your public link', public_list_path(current_user.handle) %>
+    |
     <a href="/">Home</a>
   <% else %>
     <a href="/">Log in</a>
   <% end %>
+  | <%= link_to 'All Users', user_list_path %>
 </div>
 
 <div class="notice"><%= notice %></div>

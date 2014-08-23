@@ -4,6 +4,8 @@ Quicklists::Application.routes.draw do
 
   root 'list#index'
 
+  get '/all_users' => 'user#list', :as => 'user_list'
+
   get '/:handle' => 'list#index', :as => 'public_list'
 
   post '/:handle/create' => 'list#create', :as => 'new_list'
