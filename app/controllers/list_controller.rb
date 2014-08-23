@@ -21,6 +21,7 @@ class ListController < ApplicationController
       end
       #otherwise, it's an update
       @list.name = params[:name] if params[:name]
+      @list.priority = params[:priority] if params[:priority]
       [:is_public, :is_in_parsed_mode].each do |key|
         @list[key] = params[key] == 'true'
       end

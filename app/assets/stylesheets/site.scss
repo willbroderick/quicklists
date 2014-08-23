@@ -118,6 +118,9 @@ body {
             padding: 5px 10px;
             white-space: nowrap;
           }
+          input[type=text] {
+            width: 2em;
+          }
         }
         [class^="toggle"] {
         }

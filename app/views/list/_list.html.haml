@@ -26,6 +26,11 @@
               = icon('share-square-o') + ' public'
               = check_box_tag 'is_public', :true, list.is_public
           %li
+            .sort
+              = icon('sort-numeric-desc')
+              sort
+              = text_field_tag "priority", list.priority
+          %li
             %a.remove-list{ :href => '#' }
               = icon('trash-o') + ' Delete list'
   - else
