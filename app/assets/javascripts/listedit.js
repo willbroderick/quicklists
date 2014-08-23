@@ -33,6 +33,7 @@ $(function($){
   });
   //After any input state change, dirty list to make save
   $(document).on('change keyup paste', '.list[data-post-url] :input', function(){
+    //Save, and parse content if needed
     $(this).closest('.list').trigger('dirty').trigger('processparse');
     reloadMasonry();
   });
