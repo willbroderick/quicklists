@@ -4,15 +4,29 @@
   %ul.items
     - list.items.each_with_index do |item, index|
       %li.item
-        .text
-          = text_area_tag "item-text[]", item.text
-        .controls
-          - if @show_edit_ui
-            %a.remove.ui{ :href => '#'}= icon('trash-o')
+        .edit
+          .text
+            = text_area_tag "item-text[]", item.text
+          .controls
+            - if @show_edit_ui
+              %a.remove.ui{ :href => '#'}= icon('trash-o')
   - if @show_edit_ui
     .controls.ui
       %a.add-item{ :href => '#'} 
         = icon('plus-square-o') + ' New item'
-      %a.remove-list{ :href => '#' }
-        = icon('trash-o') + ' Delete list'
-      / %a.config{ :href => '#' } Config
+      .config
+        %a.show-config{ :href => '#', :'data-togglesib' => '.config-items' }= icon('cog') + ' Config'
+        %ul.config-items.hidden
+          %li
+            %a.toggle-parsed{ :href => '#' }
+              = icon('file-code-o') + ' parsed'
+              = check_box_tag 'is_in_parsed_mode', :true, list.is_in_parsed_mode
+          %li
+            %a.toggle-public{ :href => '#' }
+              = icon('share-square-o') + ' public'
+              = check_box_tag 'is_public', :true, list.is_public
+          %li
+            %a.remove-list{ :href => '#' }
+              = icon('trash-o') + ' Delete list'
+  - else
+    .hidden= check_box_tag 'is_in_parsed_mode', :true, list.is_in_parsed_mode

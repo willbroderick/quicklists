@@ -3,16 +3,16 @@ class ListController < ApplicationController
     if params[:handle].nil? or params[:handle].blank?
       authenticate_user!
       @lists = List.where(:user_id => current_user.id)
+      @show_edit_ui = true
     else
-      @lists = List.where(:is_public => true).where('user_id IN (SELECT users.id FROM user WHERE handle = ?)', params[:handle])
+      @lists = List.where(:is_public => true).where('user_id IN (SELECT users.id FROM users WHERE handle = ?)', params[:handle])
+      @show_edit_ui = false
     end
-    @show_edit_ui = permit_edit
   end
 
   def update
-    #TODO: raise an authentication error
-    if permit_edit
-      @list = List.find(params.require(:id))
+    @list = List.find(params.require(:id))
+    if authenticate_user! and current_user.id == @list.user_id
       #is this a delete request?
       if params.has_key? :delete and params[:delete] == 'true'
         @list.destroy
@@ -21,6 +21,10 @@ class ListController < ApplicationController
       end
       #otherwise, it's an update
       @list.name = params[:name] if params[:name]
+      [:is_public, :is_in_parsed_mode].each do |key|
+        @list[key] = params[key] == 'true'
+      end
+
       if params.has_key? :'item-text'
         items = @list.items.to_a
         params[:'item-text'].each_with_index do |value,index|
@@ -41,12 +45,13 @@ class ListController < ApplicationController
       end
       @list.save
       render :text => 'Success'
+    else
+      abort 'Bad permission!'
     end
   end
 
   def create
-    #TODO: raise an authentication error
-    if permit_edit
+    if authenticate_user!
       List.new do |list|
         list.name = 'New list'
         list.user_id = current_user.id
@@ -55,9 +60,4 @@ class ListController < ApplicationController
       redirect_to '/'
     end
   end
-
-  private
-    def permit_edit
-      user_signed_in? and (params[:handle].nil? or params[:handle].blank? or current_user.handle == params[:handle])
-    end
 end

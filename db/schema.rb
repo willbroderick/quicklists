@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819070852) do
+ActiveRecord::Schema.define(version: 20140821192229) do
 
   create_table "items", force: true do |t|
     t.text     "text"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140819070852) do
     t.string   "tags"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_in_parsed_mode"
   end
 
   create_table "users", force: true do |t|

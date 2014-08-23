@@ -2,20 +2,30 @@
 <html>
 <head>
   <title>Quicklists</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"/>
 </head>
 <body>
 
-<% if user_signed_in? %>
-  Logged in as <%= current_user.email %>
-<% else %>
-  <a href="/">Log in</a>
-<% end %>
+<div class="account">
+  <% if user_signed_in? %>
+    Logged in as <%= current_user.email %>,
+    <%= form_for current_user, url: update_user_handle_path(current_user.id) do |f| %>
+      Handle:
+      <%= f.text_field :handle %>
+      <%= f.submit 'Update' %>
+    <% end %>
+    <%= link_to 'Your public link', public_list_path(current_user.handle) %>
+    <a href="/">Home</a>
+  <% else %>
+    <a href="/">Log in</a>
+  <% end %>
+</div>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<div class="notice"><%= notice %></div>
+<div class="alert"><%= alert %></div>
 
 
 <%= yield %>

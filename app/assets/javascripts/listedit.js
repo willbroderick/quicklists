@@ -7,10 +7,9 @@ $(function($){
   function reloadMasonry() {
     $container.masonry('layout');
   }
-  $(window).on('load', reloadMasonry);
 
   //Autosave
-  var autosaveDelay = 4000;
+  var autosaveDelay = 3000;
   $(document).on('dirty', '.list[data-post-url]', function(){
     var $list = $(this).closest('.list');
     //Set status
@@ -34,7 +33,7 @@ $(function($){
   });
   //After any input state change, dirty list to make save
   $(document).on('change keyup paste', '.list[data-post-url] :input', function(){
-    $(this).closest('.list').trigger('dirty');
+    $(this).closest('.list').trigger('dirty').trigger('processparse');
     reloadMasonry();
   });
 
@@ -88,9 +87,47 @@ $(function($){
   $(document).on('change keyup paste', '.list .items .item :input', function(){
     $(this).closest('.item').trigger('urlcheck');
   });
-  $('.list .items .item').trigger('urlcheck');
 
-  //All textareas are expandable
-  $('.list textarea').expanding();
+  //Config area
+  $(document).on('click', '[data-togglesib]', function(e){
+    e.preventDefault();
+    $(this).siblings($(this).data('togglesib')).toggleClass('hidden');
+  });
+  $(document).on('click', 'a[class^=toggle]:has(input[type=checkbox])', function(e){
+    e.preventDefault();
+    var $box = $(this).find('input[type=checkbox]');
+    $box.prop('checked', !$box.prop('checked')).trigger('change');
+  });
 
+  $(document).on('processparse', '.list', function(){
+    $(this).find('.item .parsed').remove();
+    if($(this).find('[name=is_in_parsed_mode]').is(':checked')) {
+      $(this).addClass('mode-parsed');
+      $(this).find('.item').each(function(){
+        var $parsed = $('<div class="parsed"/>').appendTo(this);
+        //Actually parse!
+        var html = $(this).find('textarea').val();
+        html = html.replace(/(\[([^\|\]]*)\|([^\]]*)\])/ig, '<a href="$3" target="_blank">$2</a>');
+        $parsed.html(html);
+      });
+    } else {
+      $(this).removeClass('mode-parsed');
+    }
+    reloadMasonry(); 
+  });
+
+  //To do when a list if first shown (inc page load)
+  $('.list').on('firstinit', function(){
+    //Parse
+    $(this).trigger('processparse');
+    
+    //Url links
+    $(this).find('.item').trigger('urlcheck');
+
+    //All textareas are expandable
+    $(this).find('textarea').expanding();
+  }).trigger('firstinit');
+
+  //Do last
+  $(window).on('load', reloadMasonry);
 });

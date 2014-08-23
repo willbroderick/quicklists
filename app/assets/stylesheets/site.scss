@@ -1,10 +1,18 @@
 body {
+  font: 12px/1.3em 'Open Sans', sans-serif;
   background: #eee;
+}
+
+.account {
+  border-bottom: 1px solid #ccc;
+  form {
+    display: inline;
+  }
 }
 
 .list {
   float: left;
-  width: 400px;
+  width: 350px;
   border: 1px solid #bbb;
   background: white;
   border-radius: 3px;
@@ -36,20 +44,21 @@ body {
     font-size: 140%;
   }
 
+  /* general item style */
   .items {
     margin: 0;
     padding: 0;
     .item {
       list-style: none;
-      border-left: 1px solid #33a;
+      border-left: 1px solid #aae;
       margin: 3px 0;
-      padding: 0;
+      padding: 0 0 0 1px;
       position: relative;
       overflow: hidden;
       .text {
         margin-right: 30px;
       }
-      > .controls {
+      .controls {
         position: absolute;
         top: 2px;
         right: 2px;
@@ -57,13 +66,47 @@ body {
           padding: 2px 2px;
         }
       }
+      .parsed {
+        a {
+          display: inline-block;
+          background: #d6e1e1;
+          padding: 6px 10px;
+          color: #00738a;
+          &:hover {
+            background: #bb553a;
+            color: #fff
+          }
+        }
+      }
     }
   }
   
   > .controls {
     margin: 5px 0 0;
-    .remove-list {
+    .config {
       float: right;
+      position: relative;
+      .config-items {
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        border: 1px solid #ccc;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        li {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          > * {
+            display: block;
+            padding: 5px 10px;
+            white-space: nowrap;
+          }
+        }
+        [class^="toggle"] {
+        }
+      }
     }
   }
 
@@ -81,10 +124,24 @@ body {
     left: 0;
   }
 
+  /* modes */
+  &.mode-parsed {
+    .item .edit {
+      /* hide but keep textarea functional */
+      height: 0px; line-height: 0; overflow: hidden;
+      /* controls can vanish */
+      .controls { display: none; }
+    }
+  }
+
   &.dirty {
     box-shadow: 0 0 8px 1px #f90;
   }
   &.failed-save {
     box-shadow: 0 0 10px 5px #f00;
   }
+}
+
+.hidden {
+  display: none;
 }

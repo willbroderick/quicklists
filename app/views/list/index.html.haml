@@ -1,6 +1,11 @@
 - if @show_edit_ui
-  = form_tag(new_list_path(current_user.handle), method: 'post') do
-    = submit_tag('Create new list')
+  .controls-area
+    %a{ :href => '#', :'data-togglesib' => '.controls' } Show Controls
+    .controls.hidden
+      = form_tag(new_list_path(current_user.handle), method: 'post') do
+        = submit_tag('Create new list')
+      .hints
+        .info In parsed mode, use [My Link|http://regg.ae], full html also accepted
 
 .lists
   = render partial: 'list', collection: @lists
