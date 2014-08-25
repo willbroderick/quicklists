@@ -1,0 +1,10 @@
+Next steps...
+
+
+- Masonry rearranging for lists? Find a plugin, or use something other than masonry? Rearranging DOM elements doesn't seem to work reliably.
+
+- new ui for reordering & deleting
+[list item (link)][bar | del]
+--add markup for internal (links) & external (remove/reorder) controls
+
+
