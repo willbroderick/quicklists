@@ -1,5 +1,7 @@
 Next steps...
 
+- concurrency, locally store last-updated timestamp (on list), & check last-updated timestamp matches on post.
+-- Prompt for reload if out of synch, but don't force (keep red outline on list).
 
 - Masonry rearranging for lists? Find a plugin, or use something other than masonry? Rearranging DOM elements doesn't seem to work reliably.
 
