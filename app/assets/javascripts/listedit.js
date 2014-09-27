@@ -33,8 +33,13 @@ $(function($){
   });
   //After any input state change, dirty list to make save
   $(document).on('change keyup paste', '.list[data-post-url] :input', function(){
-    //Save, and parse content if needed
-    $(this).closest('.list').trigger('dirty').trigger('processparse');
+    //Save
+    var $list = $(this).closest('.list').trigger('dirty');
+    //Minimise class
+    $list.toggleClass('minimise', $list.find('[name=is_contracted]').is(':checked'));
+    //Parse
+    $list.trigger('processparse');
+    //Masonry!
     reloadMasonry();
   });
 
@@ -99,7 +104,7 @@ $(function($){
     var $box = $(this).find('input[type=checkbox]');
     $box.prop('checked', !$box.prop('checked')).trigger('change');
   });
-
+  //Blocks in parsed mode
   $(document).on('processparse', '.list', function(){
     var checked = $(this).find('[name=is_in_parsed_mode]').is(':checked');
     //Do nothing if no state change
@@ -110,9 +115,11 @@ $(function($){
       $(this).addClass('mode-parsed');
       $(this).find('.item').each(function(){
         var $parsed = $('<div class="parsed"/>').appendTo(this);
-        //Actually parse!
         var html = $(this).find('textarea').val();
+        //Parse links
         html = html.replace(/(\[([^\|\]]*)\|([^\]]*)\])/ig, '<a href="$3" target="_blank">$2</a>');
+        //Parse newlines
+        html = html.replace(/\n/gm, '<br>').replace(/\r/gm, '');
         $parsed.html(html);
       });
     } else {
@@ -122,7 +129,7 @@ $(function($){
     reloadMasonry(); 
   });
 
-  //To do when a list if first shown (inc page load)
+  //To do when a list is first shown (inc page load)
   $('.list').on('firstinit', function(){
     //Parse
     $(this).trigger('processparse');

@@ -126,6 +126,7 @@ body {
         }
       }
     }
+
   }
 
   /* transitions */
@@ -149,6 +150,14 @@ body {
       height: 0px; line-height: 0; overflow: hidden;
       /* controls can vanish */
       .controls { display: none; }
+    }
+  }
+  &.minimise {
+    .title {
+      border-bottom: 2px dashed #ccc;
+    }
+    .items {
+      display: none;
     }
   }
 

@@ -1,4 +1,4 @@
-.list{ :'data-post-url' => (@show_edit_ui ? update_list_path(current_user.handle, list.id) : nil) }
+.list{ :'data-post-url' => (@show_edit_ui ? update_list_path(current_user.handle, list.id) : nil), :class => list.is_contracted? ? 'minimise' : '' }
   .title 
     = text_area_tag :name, list.name
   %ul.items
@@ -17,6 +17,10 @@
       .config
         %a.show-config{ :href => '#', :'data-togglesib' => '.config-items' }= icon('cog') + ' Config'
         %ul.config-items.hidden
+          %li
+            %a.toggle-contracted{ :href => '#' }
+              = icon('eye-slash') + ' minimise'
+              = check_box_tag 'is_contracted', :true, list.is_contracted
           %li
             %a.toggle-parsed{ :href => '#' }
               = icon('file-code-o') + ' parsed'
